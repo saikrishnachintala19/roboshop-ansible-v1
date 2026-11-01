@@ -49,7 +49,7 @@
         record: "{{item}}.{{domain_name}}"
         ttl: 1
         type: A
-        loop: "instances"
+        loop: "{{instances}}"
         when: action == "delete"
   
   # Delete EC2 instances
@@ -60,6 +60,6 @@
         name: "roboshop-{{item}}"
         region: us-east-1
         wait: false
-      loop: "instances"
+      loop: "{{instances}}"
       when: action == "delete"
       
