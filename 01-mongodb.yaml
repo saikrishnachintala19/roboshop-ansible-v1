@@ -15,9 +15,20 @@
       name: mongodb-org
       state: present
       use: dnf
-      
+
   - name: start the mongo service
     service:
-      name: mongodb-org
+      name: mongod
       state: started
       enabled: yes
+  
+  - name: Replace all instances of an old string with a new string
+    replace:
+      path: /etc/mongod.conf
+      regexp: '127.0.0.1'
+      replace: '0.0.0.0'
+  
+  - name: restart the mongo service
+    service:
+      name: mongod
+      state: restarted
