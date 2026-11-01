@@ -19,10 +19,23 @@
         region: us-east-1
       loop: "{{instances}}"
       when: action == "created"
-      register: ec2_output
+      register: ec2_output  # registry is used to read the output data of above module
 
+#using below we know the output of the above ec2-output
     - name: print ec2-output
       debug:
         msg: "{{ec2_output}}"
+    - name: Add an AAAA record
+      amazon.aws.route53:
+        state: present
+        zone: "{{domain_name}}"
+        record: "{{item.item}}.{{domain_name}}"
+        type: A
+        ttl: 1
+        value: "{{item.instances[0].private_ip_address}}"
+        overwrite: true
+      loop: "{{ec2_output.results}}"
+      when: action == "created"
+
         
       
