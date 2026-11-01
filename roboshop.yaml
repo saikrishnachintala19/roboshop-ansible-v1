@@ -21,8 +21,8 @@
       when: action == "created"
       register: ec2-output
 
-- name: print ec2-output
-  debug:
-    msg: "{{ec2-output}}"
+    - name: print ec2-output
+      debug:
+        msg: "{{ec2-output}}"
         
       
