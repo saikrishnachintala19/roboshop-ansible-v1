@@ -49,8 +49,8 @@
         record: "{{item}}.{{domain_name}}"
         ttl: 1
         type: A
-        loop: "{{instances}}"
-        when: action == "delete"
+      loop: "{{instances}}"
+      when: action == "delete"
   
   # Delete EC2 instances
      
