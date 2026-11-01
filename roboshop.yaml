@@ -1,7 +1,5 @@
 - name : we create a ec2 instance
-  connection: local
   hosts: local
-  become: yes
   vars:
     instances: ["mongo","redis","mysql","rabitmq"]
     action: created
