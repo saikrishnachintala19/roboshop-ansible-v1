@@ -1,0 +1,11 @@
+- name : create a mongo DB
+  hosts: mongodb
+  become: yes
+  tasks:
+  - name: download repos 
+    copy:
+     src: mongo.repo
+     dest: /etc/yum.repos.d/mongo.repo
+  - name: print the msg
+    debug:
+      msg: "this we use for repo"
