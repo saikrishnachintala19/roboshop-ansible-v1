@@ -1,0 +1,25 @@
+- name : we create a ec2 instance
+  connection: local
+  hosts: local
+  become: yes
+  vars:
+    instances: ["mongo","redis","mysql","rabitmq"]
+    action: created
+    domain_name: saikrishna-lab.online
+    ami_id: ami-0055977a6e828a4f4
+
+  tasks:
+    - name: To create a ec2 instances 
+      amazon.aws.ec2_instance:
+        name : "roboshop-{{item}}"
+        image_id: "{{ami_id}}"
+        instance_type: t3.micro
+        security_groups:
+          - roboshop-common
+          - "roboshop-{{item}}"
+        region: us-east-1
+      loop: "{{instances}}"
+      when: action == "created"
+
+        
+      
