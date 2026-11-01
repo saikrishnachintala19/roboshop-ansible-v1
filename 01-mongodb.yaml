@@ -9,11 +9,13 @@
   - name: print the msg
     debug:
       msg: "this we use for repo"
+
   - name: install mongodb
     package:
       name: mongodb-org
       state: present
-    use: dnf
+      use: dnf
+      
   - name: start the mongo service
     service:
       name: mongodb-org
