@@ -25,7 +25,10 @@
     - name: print ec2-output
       debug:
         msg: "{{ec2_output}}"
-    - name: Add an AAAA record
+    
+  #Create route53 records 
+
+    - name: create/add route53 record
       amazon.aws.route53:
         state: present
         zone: "{{domain_name}}"
@@ -36,6 +39,27 @@
         overwrite: true
       loop: "{{ec2_output.results}}"
       when: action == "created"
-
-        
+    
+  # Delete route 53 records
+    
+    - name: delete route 53 record
+      amazon.aws.route53:
+        state: absent
+        zone: "{{domain_name}}"
+        record: "{{item}}.{{domain_name}}"
+        ttl: 1
+        type: A
+        loop: "instances"
+        when: action == "delete"
+  
+  # Delete EC2 instances
+     
+    - name: delete EC2 instances
+      amazon.aws.ec2_instance:
+        state: absent
+        name: "roboshop-{{item}}"
+        region: us-east-1
+        wait: false
+      loop: "instances"
+      when: action == "delete"
       
