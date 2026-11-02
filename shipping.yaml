@@ -7,7 +7,7 @@
     
     - name: install maven and java 
       dnf:
-      name:
-       - maven 
-       - java-25-openjdk-devel
-      state: present
+        name:
+         - maven 
+         - java-25-openjdk-devel
+        state: present
