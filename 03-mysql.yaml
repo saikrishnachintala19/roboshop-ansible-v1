@@ -10,9 +10,10 @@
       state: present
       use: dnf
   - name: enable and start mysql
-    name: mysqld
-    state: started
-    enabled: true
+    service:
+      name: mysqld
+      state: started
+      enabled: true
 
   - name: setup root password
     command: mysql_secure_installation --set-root-pass RoboShop@1
