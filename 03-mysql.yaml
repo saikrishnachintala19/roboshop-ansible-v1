@@ -1,0 +1,19 @@
+- name: install mysql 
+  hosts: mysql
+  become: yes
+  tasks:
+  - name : enable mysql version
+    command: dnf module enable mysql:8.4 -y
+  - name: install mysql
+    packge:
+      name: mysql-server
+      state: present
+      use: dnf
+  - name: enable and start mysql
+    name: mysqld
+    state: started
+    enabled: true
+
+  - name: setup root password
+    command: mysql_secure_installation --set-root-pass RoboShop@1
+    
