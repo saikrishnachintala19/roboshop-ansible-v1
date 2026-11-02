@@ -38,3 +38,8 @@
       get_url:
          url: https://raw.githubusercontent.com/daws-92s/roboshop-documentation/refs/heads/main/artifacts/catalogue-v4.zip
          dest: /tmp/catalogue.zip
+    
+    - name: Extract local zip file to remote server
+      unarchive:
+        src: /tmp/catalogue.zip
+        dest: /app
