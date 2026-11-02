@@ -7,4 +7,5 @@ rabitmq_host: rabitmq.saikrishna-lab.online
 catalog_host: catalog.saikrishna-lab.online
 cart_host: cart.saikrishna-lab.online
 user_host: user.saikrishna-lab.online
+shipping_host: shipping.saikrishna-lab.online
 
