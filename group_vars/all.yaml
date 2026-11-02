@@ -1,3 +1,10 @@
 ansible_user: ec2-user
 ansible_password: DevOps321
 mongodb_host: mongo.saikrishna-lab.online
+redis_host: redis.saikrishna-lab.online
+mysql_host: mysql.saikrishna-lab.online
+rabitmq_host: rabitmq.saikrishna-lab.online
+catalog_host: catalog.saikrishna-lab.online
+cart_host: cart.saikrishna-lab.online
+user_host: user.saikrishna-lab.online
+
