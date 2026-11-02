@@ -13,7 +13,7 @@
         state: present
 
     - name: find java25 path
-      command: readlink -f /usr/lib/jvm/java-25-openjdk*/bin/java | head -1
+      shell: readlink -f /usr/lib/jvm/java-25-openjdk*/bin/java | head -1
       register: java25
 
     - name: print the output of java25
