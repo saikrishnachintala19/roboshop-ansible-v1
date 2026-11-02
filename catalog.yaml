@@ -76,3 +76,15 @@
     - name: load the data
       shell: mongosh --host {{mongodb_host}} </app/db/master-data.js
       when: command_output.stdout | int == 0
+
+    - name: Reload systemd manager configuration
+      systemd_service:
+        daemon_reload: true
+      
+    - name: start and ebale the service
+      systemd_service:
+         name: catalogue
+         state: restarted
+         enabled: true
+
+          
