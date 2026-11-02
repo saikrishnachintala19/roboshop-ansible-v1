@@ -64,5 +64,5 @@
       dnf:
         name: mongodb-mongosh
         state: present
-      command: mongosh --host {{mongodb_host}} </app/db/master-data.js
+      
           
