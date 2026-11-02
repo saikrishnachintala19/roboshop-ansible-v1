@@ -5,7 +5,7 @@
   - name : enable mysql version
     command: dnf module enable mysql:8.4 -y
   - name: install mysql
-    packge:
+    package:
       name: mysql-server
       state: present
       use: dnf
