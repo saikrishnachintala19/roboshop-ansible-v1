@@ -1,0 +1,40 @@
+- name: configure catalog
+  hosts: catalog
+  become: yes
+  tasks:
+    - name: diable nodejs
+      command: dnf module disable nodejs -y 
+    - name: enable default nodejs 
+      command:dnf module enable nodejs:24 -y
+    - name: install nodejs
+      package:
+        name: nodejs
+        state: present
+        use: dnf
+    - name: Create roboshop  system user
+      user:
+        name: roboshop
+        home: /app
+        system: true
+        shell: /usr/sbin/nologin
+        create_home: false
+        comment: 'roboshop system user'
+    - name: remove existing data
+      file:
+        path: /app
+        state: absent
+
+    - name: remove existing data
+      file:
+        path: /tmp/catalogue.zip
+        state: absent
+    
+    - name: create app directory 
+      file:
+        path: /app
+        state: directory
+    
+    - name: download the file from the url
+      get_url:
+         url: https://raw.githubusercontent.com/daws-92s/roboshop-documentation/refs/heads/main/artifacts/catalogue-v4.zip
+         dest: /tmp/catalogue.zip
