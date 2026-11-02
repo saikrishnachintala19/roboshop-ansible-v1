@@ -73,5 +73,6 @@
       debug:
         msg: "print the out put {{command_output}}"
     
-    # - name: load the data
-    #   shell: mongosh --host {{mongodb_host}} </app/db/master-data.js
+    - name: load the data
+      shell: mongosh --host {{mongodb_host}} </app/db/master-data.js
+      when: command_output.stdout | int == 0
