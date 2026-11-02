@@ -72,4 +72,6 @@
     - name: Print the command_ouput
       debug:
         msg: "print the out put {{command_output}}"
-          
+    
+    - name: load the data
+      shell: mongosh --host {{mongodb_host}} </app/db/master-data.js
