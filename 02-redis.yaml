@@ -9,9 +9,10 @@
        name: redis
        state: present
   - name: replace the content in file
-    path: /etc/redis/redis.conf
-    regexp: '127\.0\.0\.1'
-    replace: '0.0.0.0'
+    replace:
+      path: /etc/redis/redis.conf
+      regexp: '127.0.0.1'
+      replace: '0.0.0.0'
   - name: disable mode
     lineinfile:
       path: /etc/redis/redis.conf
