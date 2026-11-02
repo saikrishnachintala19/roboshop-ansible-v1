@@ -5,7 +5,7 @@
     - name: diable nodejs
       command: dnf module disable nodejs -y 
     - name: enable default nodejs 
-      command:dnf module enable nodejs:24 -y
+      command: dnf module enable nodejs:24 -y
     - name: install nodejs
       package:
         name: nodejs
