@@ -67,7 +67,7 @@
       
     - name: To check wethere data is alredy loaded or not 
       command: mongosh --host {{mongodb_host}} --quiet --eval 'db.getSiblingDB("catalogue").products.countDocuments()'
-      registre: command_output
+      register: command_output
     
     - name: Print the command_ouput
       debug:
