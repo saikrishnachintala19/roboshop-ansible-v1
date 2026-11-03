@@ -20,3 +20,86 @@
       debug:
        msg: "print the output {{java25}}"
 
+    - name: direclty set the java25
+      command: alternatives --set java {{java25.stdout}}
+    
+    - name: perminent set the java25
+      copy:
+        content: "export JAVA_HOME= {{java25.stdout | dirname | dirname }}"
+        dest: /etc/profile.d/java.sh
+
+    - name: Create roboshop  system user
+      user:
+        name: roboshop
+        home: /app
+        system: true
+        shell: /usr/sbin/nologin
+        create_home: false
+        comment: 'roboshop system user'
+    - name: remove existing data
+      file:
+        path: /app
+        state: absent
+
+    - name: remove existing data
+      file:
+        path: /tmp/shipping.zip
+        state: absent
+    
+    - name: create app directory 
+      file:
+        path: /app
+        state: directory
+    
+    - name: download the file from the url
+      get_url:
+         url: https://raw.githubusercontent.com/daws-92s/roboshop-documentation/refs/heads/main/artifacts/shipping-v4.zip
+         dest: /tmp/shipping.zip
+    
+    - name: Extract local zip file to remote server
+      unarchive:
+        src: /tmp/shipping.zip
+        dest: /app
+        remote_src: yes
+    
+    - name: Install npm dependencies in specific directory
+      command: mvn clean package
+      args:
+        chdir: /app
+    
+    # - name: copy mongo systmd service file
+    #   template:
+    #     src: catalog.systemd.service.j2       # Local path (relative to templates/)
+    #     dest: /etc/systemd/system/shipping.service # Remote destination path
+    
+    # - name: Copy mongo.repo to remote host
+    #   copy:
+    #     src: mongo.repo
+    #     dest: /etc/yum.repos.d/mongo.repo
+
+    # - name: Install mongodb-org package
+    #   dnf:
+    #     name: mongodb-mongosh
+    #     state: present
+      
+    # - name: To check wethere data is alredy loaded or not 
+    #   command: mongosh --host {{mongodb_host}} --quiet --eval 'db.getSiblingDB("shipping").products.countDocuments()'
+    #   register: command_output
+    
+    # - name: Print the command_ouput
+    #   debug:
+    #     msg: "print the out put {{command_output}}"
+    
+    # - name: load the data
+    #   shell: mongosh --host {{mongodb_host}} </app/db/master-data.js
+    #   when: command_output.stdout | int == 0
+
+    # - name: Reload systemd manager configuration
+    #   systemd_service:
+    #     daemon_reload: true
+      
+    # - name: start and ebale the service
+    #   systemd_service:
+    #      name: shipping
+    #      state: restarted
+    #      enabled: true
