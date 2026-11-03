@@ -11,4 +11,5 @@ shipping_host: shipping.saikrishna-lab.online
 payment_host: payment.saikrishna-lab.online
 dispatch_host: dispatch.saikrishna-lab.online
 frontend_host: frontend.saikrishna-lab.online
+mysql_root_password: RoboShop@1
 
