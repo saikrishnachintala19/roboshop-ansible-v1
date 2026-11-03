@@ -67,7 +67,7 @@
       args:
         chdir: /app
       environment:
-        JAVA_HOME= "{{java25.stdout | dirname | dirname }}"
+        JAVA_HOME: "{{java25.stdout | dirname | dirname }}"
         MAVEN_OPTS: "-Djdk.tls.namedGroups=\"secp256r1,secp384r1,ffdhe2048\""
     
     # - name: copy mongo systmd service file
