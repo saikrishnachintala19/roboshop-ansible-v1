@@ -113,7 +113,7 @@
         chdir: /app
       
     - name: load the mysql data
-      command: mysql -h {{mysql_host}} -uroot -p{{mysql_root_password}} -N -B -e "select count(*) from cities.cities;"
+      command: mysql -h "{{mysql_host}}" -uroot -p{{mysql_root_password}} -N -B -e "select count(*) from cities.cities;"
       register: cities_output
 
     - name: show the outpu
