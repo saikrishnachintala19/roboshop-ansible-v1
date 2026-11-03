@@ -112,12 +112,39 @@
       args:
         chdir: /app
       
-    - name: load the mysql data
-      command: mysql -h "{{mysql_host}}" -uroot -p{{mysql_root_password}} -N -B -e "select count(*) from cities.cities;"
+    - name: checl the mysql data count
+      command: mysql -h {{mysql_host}} -uroot -p{{mysql_root_password}} -N -B -e "select count(*) from cities.cities;"
       register: cities_output
 
     - name: show the outpu
       debug:
          msg: "print the {{cities_output}}"
+    
+    - name: load the data 
+      shell: mysql -h {{mysql_host}} -uroot -p{{mysql_root_password}} < < /app/db/master-data.sql
+      when: cities_output.rc != 0 or cities_output.stdout | int == 0
+    
+    - name: To create app user
+      shell: mysql -h {{mysql_host}} -uroot -p{{mysql_root_password}} < /app/db/app-user.sql
 
+    - name: copy shipping systmd service file
+      template:
+        src: shipping.systemd.service.j2      # Local path (relative to templates/)
+        dest: /etc/systemd/system/shippingue.service # Remote destination path
+        
+    - name: Copy shipping.repo to remote host
+      copy:
+        src: shipping.repo
+        dest: /etc/yum.repos.d/shipping.repo
+
+    - name: Reload systemd manager configuration
+      systemd_service:
+        daemon_reload: true
       
+    - name: start and ebale the service
+      systemd_service:
+         name: shipping
+         state: restarted
+         enabled: true
+
+            
