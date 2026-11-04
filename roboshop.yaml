@@ -2,7 +2,7 @@
   hosts: localhost
   connection: local
   vars:
-    instances: ["mongo","redis","mysql","rabitmq"]
+    instances: ["mongo","redis","mysql","rabitmq","frontend","catalog","user","cart","shipping","payment"]
     action: created
     domain_name: saikrishna-lab.online
     ami_id: ami-0055977a6e828a4f4
@@ -28,7 +28,7 @@
     
   #Create route53 records 
 
-    - name: create/add route53 record
+    - name: create/add route53 record for privateip
       amazon.aws.route53:
         state: present
         zone: "{{domain_name}}"
@@ -39,8 +39,24 @@
         overwrite: true
       loop: "{{ec2_output.results}}"
       when: action == "created"
+
+    - name: create/add route53 record for public ip
+      amazon.aws.route53:
+        state: present
+        zone: "{{domain_name}}"
+        record: "{{domain_name}}"
+        type: A
+        ttl: 1
+        value: "{{item.instances[0].public_ip_address}}"
+        overwrite: true
+      loop: "{{ec2_output.results}}"
+      when: action == "created" and item.item == "frontend"
     
-  # Delete route 53 records
+    - name: Show processed instance names
+      debug:
+        msg: "{{ ec2_output.results | map(attribute='item') | list }}"
+    
+  # Delete route 53 records  
     
     - name: delete route 53 record
       amazon.aws.route53:
@@ -52,6 +68,17 @@
       loop: "{{instances}}"
       when: action == "delete"
   
+  # Delete route 53 records  from frontend
+
+    - name: delete route 53 record
+      amazon.aws.route53:
+        state: absent
+        zone: "{{domain_name}}"
+        record: "{{domain_name}}"
+        ttl: 1
+        type: A
+      loop: "{{instances}}"
+      when: action == "delete" and item.item == "frontend"
   # Delete EC2 instances
      
     - name: delete EC2 instances
