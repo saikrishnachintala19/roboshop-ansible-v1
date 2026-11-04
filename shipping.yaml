@@ -128,9 +128,13 @@
     - name: load the data 
       shell: mysql -h {{mysql_host}} -uroot -p{{mysql_root_password}} < < /app/db/master-data.sql
       when: cities_output.rc != 0 or cities_output.stdout | int == 0
+      tags:
+        - mysql
     
     - name: To create app user
       shell: mysql -h {{mysql_host}} -uroot -p{{mysql_root_password}} < /app/db/app-user.sql
+      tags:
+        - mysql
 
     - name: copy shipping systmd service file
       template:
