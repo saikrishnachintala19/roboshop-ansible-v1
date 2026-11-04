@@ -121,7 +121,7 @@
     - name: show the outpu
       debug:
          msg: "print the {{cities_output}}"
-         tags:
+      tags:
         - mysql
     
     - name: load the data 
