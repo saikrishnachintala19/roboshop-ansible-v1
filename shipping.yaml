@@ -141,10 +141,10 @@
         src: shipping.systemd.service.j2      # Local path (relative to templates/)
         dest: /etc/systemd/system/shipping.service # Remote destination path
         
-    - name: Copy shipping.repo to remote host
-      copy:
-        src: shipping.repo
-        dest: /etc/yum.repos.d/shipping.repo
+    # - name: Copy shipping.repo to remote host
+    #   copy:
+    #     src: shipping.repo
+    #     dest: /etc/yum.repos.d/shipping.repo
 
     - name: Reload systemd manager configuration
       systemd_service:
