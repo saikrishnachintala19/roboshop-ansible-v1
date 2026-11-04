@@ -40,7 +40,7 @@
       loop: "{{ec2_output.results}}"
       when: action == "created"
 
-    - name: create/add route53 record for public ip
+    - name: create/add route53 record for public ip for frontend
       amazon.aws.route53:
         state: present
         zone: "{{domain_name}}"
@@ -77,8 +77,7 @@
         record: "{{domain_name}}"
         ttl: 1
         type: A
-      loop: "{{instances}}"
-      when: action == "delete" and item.item == "frontend"
+      when: action == "delete" 
   # Delete EC2 instances
      
     - name: delete EC2 instances
