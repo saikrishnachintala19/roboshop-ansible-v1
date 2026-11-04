@@ -115,10 +115,14 @@
     - name: checl the mysql data count
       command: mysql -h {{mysql_host}} -uroot -p{{mysql_root_password}} -N -B -e "select count(*) from cities.cities;"
       register: cities_output
+      tags:
+        - mysql
 
     - name: show the outpu
       debug:
          msg: "print the {{cities_output}}"
+         tags:
+        - mysql
     
     - name: load the data 
       shell: mysql -h {{mysql_host}} -uroot -p{{mysql_root_password}} < < /app/db/master-data.sql
