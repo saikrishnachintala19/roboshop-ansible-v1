@@ -111,8 +111,10 @@
       command: mv target/shipping.jar shipping.jar
       args:
         chdir: /app
+      tags:
+        - mysql
       
-    - name: checl the mysql data count
+    - name: check the mysql data count
       command: mysql -h {{mysql_host}} -uroot -p{{mysql_root_password}} -N -B -e "select count(*) from cities.cities;"
       register: cities_output
       tags:
