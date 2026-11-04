@@ -1,0 +1,42 @@
+- name: configure frontend server
+  hosts: frontend_host
+  become: yes
+  tasks:
+    - name: Disable nginx
+      command: dnf module disable nginx -y
+
+    - name: enable nginx
+      command: dnf module enable nginx:1.26 -y
+
+    - name: install nginx
+      dnf:
+       name: nginx 
+       state: present
+
+    - name: start and enable nginx
+      systemd_service:
+         name: nginx
+         state: started
+         enabled: true  
+    
+    - name: remove existing data
+      file:
+        path: /usr/share/nginx/html/
+        state: absent
+
+    - name: remove existing data
+      file:
+        path: /tmp/frontend.zip
+        state: absent
+    
+    - name: download the file from the url
+      get_url:
+         url: https://raw.githubusercontent.com/daws-92s/roboshop-documentation/refs/heads/main/artifacts/frontend-v4.zip
+         dest: /tmp/frontend.zip
+    
+    - name: Extract local zip file to remote server
+      unarchive:
+        src: /tmp/frontend.zip
+        dest: /usr/share/nginx/html
+        remote_src: yes
+      
