@@ -13,12 +13,6 @@
        name: nginx 
        state: present
 
-    - name: start and enable nginx
-      systemd_service:
-         name: nginx
-         state: started
-         enabled: true 
-
     - name: Create nginx web directory
       file:
        path: /usr/share/nginx/html
@@ -57,11 +51,16 @@
     - name: copy the file 
       template:
         src: roboshop.conf
-        dest: /etc/nginx/default.d/
+        dest: /etc/nginx/default.d/roboshop.conf
 
-    - name: restart the service
-      service:
+    - name: Validate nginx configuration
+      command: nginx -t
+      changed_when: false
+
+    - name: Start and enable nginx
+      systemd_service:
         name: nginx
         state: restarted
+        enabled: true
 
       
