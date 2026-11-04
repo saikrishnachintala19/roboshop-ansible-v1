@@ -56,8 +56,8 @@
 
     - name: copy the file 
       copy:
-      src: roboshop.conf
-      dest: /etc/nginx/default.d/
+        src: roboshop.conf
+        dest: /etc/nginx/default.d/
 
     - name: restart the service
       service:
