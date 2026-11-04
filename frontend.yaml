@@ -18,11 +18,24 @@
          name: nginx
          state: started
          enabled: true  
-    
-    - name: remove existing data
+    - name: Create nginx web directory
       file:
-        path: /usr/share/nginx/html/
+       path: /usr/share/nginx/html
+       state: directory
+  
+    - name: Find existing HTML contents
+      find:
+        paths: /usr/share/nginx/html
+        recurse: true
+        hidden: true
+        file_type: any
+      register: html_contents
+
+    - name: Remove existing HTML contents
+      file:
+        path: "{{ item.path }}"
         state: absent
+      loop: "{{ html_contents.files }}"
 
     - name: remove existing data
       file:
