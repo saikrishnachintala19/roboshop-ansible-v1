@@ -139,7 +139,7 @@
     - name: copy shipping systmd service file
       template:
         src: shipping.systemd.service.j2      # Local path (relative to templates/)
-        dest: /etc/systemd/system/shippingue.service # Remote destination path
+        dest: /etc/systemd/system/shipping.service # Remote destination path
         
     - name: Copy shipping.repo to remote host
       copy:
