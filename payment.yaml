@@ -3,10 +3,11 @@
   become: yes
   tasks:
     - name: install python
-      dnf: 
-       - python3.14 
-       - python3.14-pip
-      state: present
+      dnf:
+       name: 
+        - python3.14 
+        - python3.14-pip
+       state: present
 
     - name: Create roboshop  system user
       user:
