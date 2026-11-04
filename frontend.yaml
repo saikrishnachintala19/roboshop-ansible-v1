@@ -17,7 +17,8 @@
       systemd_service:
          name: nginx
          state: started
-         enabled: true  
+         enabled: true 
+
     - name: Create nginx web directory
       file:
        path: /usr/share/nginx/html
@@ -52,4 +53,15 @@
         src: /tmp/frontend.zip
         dest: /usr/share/nginx/html
         remote_src: yes
+
+    - name: copy the file 
+      copy:
+      src: roboshop.conf
+      dest: /etc/nginx/default.d/
+
+    - name: restart the service
+      service:
+        name: nginx
+        state: restarted
+
       
