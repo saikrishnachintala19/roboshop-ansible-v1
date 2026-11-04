@@ -1,5 +1,5 @@
 - name: configure frontend server
-  hosts: frontend_host
+  hosts: frontend
   become: yes
   tasks:
     - name: Disable nginx
