@@ -55,7 +55,7 @@
         remote_src: yes
 
     - name: copy the file 
-      copy:
+      template:
         src: roboshop.conf
         dest: /etc/nginx/default.d/
 
